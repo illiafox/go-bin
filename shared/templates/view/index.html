@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header/style.css">
+
+    <link rel="stylesheet" href="/css/element/links.css">
+
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#000000FF">
+    <title>GoBIN</title>
+</head>
+
+<style>
+
+
+    * {
+        -moz-tab-size: 1;
+        tab-size: 1;
+    }
+
+    .link {
+        text-align: center;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .link:hover {
+        scale: 1.1;
+    }
+</style>
+
+<body style="background-color: black;">
+
+<header>
+    <div class="center">
+        <img src="/images/logo.jpg" alt="logo"/>
+        <h1><a href="/">GoBIN</a></h1>
+    </div>
+</header>
+
+<div style="background-color: black; color:white; font-family: 'Roboto Mono', monospace;">
+
+    <h3 class="link"><a id="key" onclick="copy()">localhost:8080/0000000000000000</a></h3>
+    <h4 style="text-align: center; margin-bottom: 20px; margin-top: 0">Created at: {{ .Created }}</h4>
+    <div style="display:flex; align-items: center;justify-content: center; margin: 0 20px">
+        <h2>{{ .Content }}</h2>
+    </div>
+</div>
+
+</body>
+
+<script>
+    let link = "go.bin" + window.location.pathname;
+    let key = document.getElementById("key")
+    key.innerText = link
+
+    function copy() {
+        navigator.clipboard.writeText(link);
+        key.innerText += ' (Copied)'
+    }
+</script>
+
+</html>

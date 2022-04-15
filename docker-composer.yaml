@@ -1,0 +1,63 @@
+services:
+
+# HTTP server
+  server:
+    build: .
+    container_name: 'server'
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - hosts
+
+    environment:
+      # Host
+      HOST_PORT: 8080
+
+      # Enable environment mode
+      ARGS: -env
+
+      # Postgres
+      POSTGRES_USER: server
+      POSTGRES_PASSWORD: M5F3wWtFxkQ8Ra4n
+      POSTGRES_DATABASE: gobin
+
+      POSTGRES_IP: postgres
+      POSTGRES_PORT: 5433
+
+      # Memcached
+      MEMCACHED_IP: memcached
+      MEMCACHED_PORT: 11211
+
+# Memcached
+  memcached:
+    image: memcached
+    container_name: 'memcached'
+    networks:
+      - hosts
+
+# Postgres
+  postgres:
+    image: 'postgres:latest'
+
+    restart: always
+
+    volumes:
+      - "./sql/migrate-up.sql:/docker-entrypoint-initdb.d/migrate-up.sql"
+
+    ports:
+      - "5433:5433"
+
+    networks:
+      - hosts
+
+    environment:
+      POSTGRES_DB: gobin
+      PGPORT: 5433
+      POSTGRES_USER: server
+      POSTGRES_PASSWORD: M5F3wWtFxkQ8Ra4n
+
+networks:
+  hosts:
+    driver: 'bridge'

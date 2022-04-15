@@ -1,0 +1,16 @@
+[Postgres]
+User = "server"
+Pass = "M5F3wWtFxkQ8Ra4n"
+DbName = "gobin"
+IP = "127.0.0.1"
+Port = "5432"
+Protocol = "tcp"
+
+[Memcached]
+IP = "127.0.0.1"
+Port = "11211"
+
+[Host]
+Port = "8080"
+Key = "cert/localhost.key"
+Cert = "cert/localhost.crt"

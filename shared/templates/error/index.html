@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/header/style.css">
+
+    <link rel="stylesheet" href="/css/element/links.css">
+
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#000000FF">
+    <title>Error</title>
+</head>
+
+<style>
+    .absolute {
+        position: absolute;
+        top: 50%; /* position the top  edge of the element at the middle of the parent */
+        left: 50%; /* position the left edge of the element at the middle of the parent */
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<body style="background-color: black;">
+
+<header>
+    <div class="center">
+        <img src="/images/logo.jpg" alt="logo"/>
+        <h1><a href="/">GoBIN</a></h1>
+    </div>
+</header>
+
+<div class="absolute">
+    <h1 style="background-color: black; color:white; font-family: 'Roboto Mono', monospace; font-size: 60px; text-align: center">
+        {{.}}</h1>
+</div>
+
+</body>
+</html>

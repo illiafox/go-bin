@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/header/style.css">
+    <link rel="stylesheet" href="/css/element/links.css">
+    <link rel="stylesheet" href="/css/element/button.css">
+
+    <meta charset="UTF-8">
+
+    <title>GoBIN</title>
+</head>
+
+<style>
+    footer {
+        bottom: 0;
+        height: 2em;
+        left: 0;
+        /*position: fixed; !* OldProperty *!*/
+        position: static; /* Updated Property */
+        font-size: small;
+        width: 100%;
+    }
+</style>
+
+<body style="background-color: black; font-family: 'Inconsolata', monospace; color: white; margin: 20px">
+
+<header>
+    <div class="center">
+        <img src="/images/logo.jpg" alt="logo"/>
+        <h1><a href="/">Fort Studio</a></h1>
+        <br>
+    </div>
+</header>
+
+
+<div style="text-align: center;">
+    <div style="display: flex; justify-content: center; margin: 20px">
+        <h1 id="logo" style="font-size: 60px; margin-top: 0;margin-bottom: 0">GoBIN</h1>
+        <button id="button" style="font-size: 60px;"  onclick="submit()">Post</button>
+    </div>
+
+    <form method="post" action="/new" id="form" style="margin: 20px">
+        <textarea  name="content" rows="400" id="content" onchange="changeContent()"
+                  style="font-size: 20px;color:white; background-color: black;width:100%; margin-top: 10px"
+                  placeholder="Write your bin! Button will appear once you write" autofocus></textarea>
+
+    </form>
+
+</div>
+
+<script>
+
+    const min = 30
+
+    textarea = document.getElementById('content')
+    textarea.value = ''
+
+    textarea.addEventListener('input', () => {
+        if (textarea.value.length >= min) {
+            document.getElementById('logo').style.display = "none";
+            document.getElementById('button').style.display = "block";
+        } else {
+            document.getElementById('logo').style.display = "block";
+            document.getElementById('button').style.display = "none";
+        }
+    })
+
+    function changeContent() {
+        if (textarea.value.length >= min) {
+            document.getElementById('logo').style.display = "none";
+            document.getElementById('button').style.display = "block";
+        } else {
+            document.getElementById('logo').style.display = "block";
+            document.getElementById('button').style.display = "none";
+        }
+    }
+
+    changeContent() // don't remove
+
+    function submit() {
+        if (document.getElementById('content').value.length >= min) {
+        document.getElementById('form').submit()
+        } else {
+            document.getElementById('logo').style.display = "block";
+            document.getElementById('button').style.display = "none";
+        }
+    }
+
+</script>
+
+</body>
+</html>
