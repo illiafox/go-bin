@@ -2,14 +2,16 @@
 ![Model](https://user-images.githubusercontent.com/61962654/163591990-4daf2f1f-8eea-493d-94f7-5e40040b8a9f.png)
 ![Screenshot](https://user-images.githubusercontent.com/61962654/163588613-e1fc5cd1-023c-44b2-a331-5f35b80d871c.png)
 
+---
+## Requirements
+* **PostgreSQL:** `14.2`
+* **Go:** `1.18`
+
 ## docker-compose
 No additional settings are required, just start and use
 ```shell
 docker-compose up
 ```
-
-
-
 ### Dockerfile
 ```shell
 docker build . --tag=gobin
