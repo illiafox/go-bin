@@ -4,8 +4,9 @@
 
 ---
 ## Requirements
-* **PostgreSQL:** `14.2`
 * **Go:** `1.18`
+* **PostgreSQL:** `14.2`
+* **Memcached:** `1.6.15`
 
 ## docker-compose
 No additional settings are required, just start and use
