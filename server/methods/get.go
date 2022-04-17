@@ -9,7 +9,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"strings"
 )
 
 func (m Methods) Get(w http.ResponseWriter, r *http.Request) {
@@ -73,28 +72,11 @@ func (m Methods) Get(w http.ResponseWriter, r *http.Request) {
 
 generate:
 
-	content := bin.Content
-	var buf = strings.Builder{}
-	for _, r := range content {
-		v, ok := htmlMap[r]
-		if !ok {
-			buf.WriteRune(r)
-
-			continue
-		}
-		buf.WriteString(v)
-	}
-
 	// Execute template
 	templates.View.Execute(w, view{
 		&bin.Created,
-		template.HTML(buf.String()),
+		template.HTML(bin.Content),
 	})
-}
-
-var htmlMap = map[rune]string{
-	'\n': "<br>",
-	'\t': "&emsp;&emsp;&emsp;&emsp;", // Four spaces gap
 }
 
 type view struct {

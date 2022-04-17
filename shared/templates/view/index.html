@@ -48,7 +48,7 @@
     <h3 class="link"><a id="key" onclick="copy()">localhost:8080/0000000000000000</a></h3>
     <h4 style="text-align: center; margin-bottom: 20px; margin-top: 0">Created at: {{ .Created }}</h4>
     <div style="display:flex; align-items: center;justify-content: center; margin: 0 20px">
-        <h2>{{ .Content }}</h2>
+        <h2 id="content">Processing...</h2>
     </div>
 </div>
 
@@ -58,6 +58,10 @@
     let link = "go.bin" + window.location.pathname;
     let key = document.getElementById("key")
     key.innerText = link
+
+    let content = "{{ .Content }}".replace(/\r?\n/g, "<br/>").replace(/\t/g, "&emsp;&emsp;&emsp;&emsp;");
+
+    document.getElementById("content").innerHTML = content
 
     function copy() {
         navigator.clipboard.writeText(link);

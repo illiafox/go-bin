@@ -14,6 +14,6 @@ func NewInternal(err error) error {
 	if err == nil {
 		return nil
 	}
-	return InternalError{err.Error()}
 
+	return InternalError{err.Error()}
 }
