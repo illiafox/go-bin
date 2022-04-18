@@ -59,13 +59,39 @@
     let key = document.getElementById("key")
     key.innerText = link
 
-    let content = "{{ .Content }}".replace(/\r?\n/g, "<br/>").replace(/\t/g, "&emsp;&emsp;&emsp;&emsp;");
+    let data = "{{ .Content }}".replace(/\r?\n/g, "<br/>").replace(/\t/g, "&emsp;&emsp;&emsp;&emsp;");
 
-    document.getElementById("content").innerHTML = content
+    let content = document.getElementById("content")
+    content.innerText = ''
+
+    insertHTML(data, content, false)
 
     function copy() {
         navigator.clipboard.writeText(link);
         key.innerText += ' (Copied)'
+    }
+
+    document.write = function (input) {
+        content.innerHTML += input;
+    }
+
+    function insertHTML(html, dest) {
+        let container = document.createElement('div');
+        container.innerHTML = html;
+
+        let scripts = container.querySelectorAll('script');
+        let nodes = container.childNodes;
+
+        for (let i = 0; i < nodes.length; i++) dest.appendChild(nodes[i].cloneNode(true));
+
+        for (let i = 0; i < scripts.length; i++) {
+            let script = document.createElement('script');
+            script.type = scripts[i].type || 'text/javascript';
+            if (scripts[i].hasAttribute('src')) script.src = scripts[i].src;
+            script.innerHTML = scripts[i].innerHTML;
+            document.head.appendChild(script);
+            document.head.removeChild(script);
+        }
     }
 </script>
 

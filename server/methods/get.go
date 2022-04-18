@@ -29,12 +29,18 @@ func (m Methods) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var data []byte
-
 	// If found -> execute
 	if bin != nil {
-		goto generate
+		// Execute template
+		templates.View.Execute(w, view{
+			&bin.Created,
+			template.HTML(bin.Content),
+		})
+
+		return
 	}
+
+	var data []byte
 
 	// 2. Seek in postgres
 	data, err = m.db.Postgres.GetBin(key)
@@ -69,8 +75,6 @@ func (m Methods) Get(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
-
-generate:
 
 	// Execute template
 	templates.View.Execute(w, view{
