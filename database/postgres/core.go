@@ -1,22 +1,28 @@
 package postgres
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
+	"github.com/jackc/pgx/v4/pgxpool"
+	"time"
 
 	// postgres
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4"
 	//
 	"gobin/utils/config"
 )
 
 type Postgres struct {
-	conn *sql.DB
+	conn *pgxpool.Pool
 }
 
-func New(conf config.Postgres) (*Postgres, func() error, error) {
-	conn, err := sql.Open(
-		"postgres",
+func New(conf config.Postgres) (*Postgres, func(), error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+
+	pool, err := pgxpool.Connect(
+		ctx,
 		fmt.Sprintf("postgres://%s:%s@%v:%v/%v?sslmode=disable",
 			conf.User,
 			conf.Pass,
@@ -25,15 +31,14 @@ func New(conf config.Postgres) (*Postgres, func() error, error) {
 			conf.DbName,
 		),
 	)
-
 	if err != nil {
 		return nil, nil, fmt.Errorf("opening connection: %w", err)
 	}
 
-	err = conn.Ping()
+	err = pool.Ping(ctx)
 	if err != nil {
 		return nil, nil, fmt.Errorf("ping: %w", err)
 	}
 
-	return &Postgres{conn}, conn.Close, nil
+	return &Postgres{pool}, pool.Close, nil
 }

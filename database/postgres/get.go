@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -10,7 +11,7 @@ import (
 func (p Postgres) GetBin(key string) ([]byte, error) {
 	var data []byte
 
-	err := p.conn.QueryRow("SELECT data FROM bins WHERE key = $1", key).Scan(&data)
+	err := p.conn.QueryRow(context.Background(), "SELECT data FROM bins WHERE key = $1", key).Scan(&data)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

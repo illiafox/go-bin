@@ -9,19 +9,20 @@ import (
 	"gobin/utils/config"
 )
 
+type PoolClose func()
+
 type Database struct {
 	Memcached *memcached.Memcached
 	//
-	Postgres      *postgres.Postgres
-	postgresClose func() error
+	Postgres *postgres.Postgres
+	//
+	closePool PoolClose
 }
 
 func (d Database) Close() {
 	log.Println("Closing database connections")
-	// Postgres
-	if err := d.postgresClose(); err != nil {
-		log.Println("Postgres:", err)
-	}
+
+	d.closePool()
 	//
 }
 
@@ -32,15 +33,15 @@ func New(conf *config.Config) (*Database, error) {
 		return nil, fmt.Errorf("memcached: %w", err)
 	}
 
-	pg, Close, err := postgres.New(conf.Postgres)
+	pg, closePG, err := postgres.New(conf.Postgres)
 	if err != nil {
 		return nil, fmt.Errorf("posgres: %w", err)
 	}
 
 	return &Database{
-		Memcached:     mc,
-		Postgres:      pg,
-		postgresClose: Close,
+		Memcached: mc,
+		Postgres:  pg,
+		closePool: closePG,
 	}, nil
 
 }
